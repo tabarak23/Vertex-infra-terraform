@@ -34,3 +34,17 @@ variable "enable_flow_logs" {
   default     = false
 }
 
+
+
+
+variable "create_db_subnets" {
+  description = "Create dedicated DB subnets"
+  type        = bool
+  default     = true
+}
+
+variable "enable_vpc_endpoints" {
+  description = "Enable required VPC endpoints"
+  type        = bool
+  default     = true
+}

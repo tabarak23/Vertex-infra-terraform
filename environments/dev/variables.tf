@@ -1,63 +1,89 @@
 variable "aws_region" {
-  type = string
+  description = "AWS region where resources will be created"
+  type        = string
 }
 
 variable "vpc_cidr" {
-  type = string
+  description = "CIDR block for the VPC"
+  type        = string
 }
 
 variable "az_count" {
-  type = number
+  description = "Number of availability zones to use"
+  type        = number
 }
 
 variable "single_nat_gateway" {
-  type = bool
+  description = "Whether to create a single shared NAT gateway"
+  type        = bool
 }
 
 variable "enable_flow_logs" {
-  type = bool
+  description = "Enable VPC flow logs"
+  type        = bool
 }
 
 variable "name" {
-  type = string
+  description = "Name of the EKS cluster"
+  type        = string
 }
 
 variable "environment" {
-  type = string
+  description = "Deployment environment (e.g., dev, staging, prod)"
+  type        = string
 }
 
 variable "kubernetes_version" {
-  type = string
+  description = "Kubernetes version for the EKS cluster"
+  type        = string
 }
 
 variable "endpoint_private_access" {
-  type = bool
+  description = "Enable private access to the EKS API server endpoint"
+  type        = bool
 }
 
 variable "endpoint_public_access" {
-  type = bool
+  description = "Enable public access to the EKS API server endpoint"
+  type        = bool
 }
 
 variable "public_access_cidrs" {
-  type = list(string)
+  description = "List of CIDR blocks that can access the public EKS endpoint"
+  type        = list(string)
 }
 
 variable "log_retention_days" {
-  type = number
+  description = "Number of days to retain EKS control plane logs"
+  type        = number
 }
 
 variable "cluster_log_types" {
-  type = list(string)
+  description = "List of EKS control plane log types to enable"
+  type        = list(string)
 }
 
 variable "addons" {
-  type = map(any)
+  description = "Map of EKS addons and their configurations"
+  type        = map(any)
 }
 
 variable "node_groups" {
-  type = map(any)
+  description = "Map of EKS managed node group configurations"
+  type        = map(any)
 }
 
 variable "tags" {
-  type = map(string)
+  description = "Tags to apply to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+
+variable "allowed_ssh_cidr" {
+  type = string
+}
+
+variable "key_name" {
+  type = string
 }

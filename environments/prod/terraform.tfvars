@@ -5,10 +5,11 @@ aws_region = "us-west-1"
 
 vpc_cidr = "10.0.0.0/16"
 az_count = 2
+
 single_nat_gateway = true
 enable_flow_logs   = false
 
-kubernetes_version = "1.35"
+kubernetes_version = "1.30"
 
 endpoint_private_access = true
 endpoint_public_access  = false
@@ -16,10 +17,12 @@ public_access_cidrs     = []
 
 log_retention_days = 7
 
+cluster_log_types = ["api", "audit", "authenticator"]
+
 addons = {
-  coredns = { version = "v1.13.2-eksbuild.1" }
-  kube-proxy = { version = "v1.35.0-eksbuild.2" }
-  vpc-cni = { version = "v1.21.1-eksbuild.3" }
+  coredns    = {}
+  kube-proxy = {}
+  vpc-cni    = {}
 }
 
 node_groups = {
@@ -36,4 +39,7 @@ tags = {
   project = "vertex"
   env     = "prod"
 }
-cluster_log_types = ["api", "audit", "authenticator"]
+
+
+allowed_ssh_cidr = "49.206.44.97/32"
+key_name =  "ansible_controller"

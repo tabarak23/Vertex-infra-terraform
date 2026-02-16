@@ -18,6 +18,12 @@ output "cluster_oidc_issuer" {
   value       = aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
 
+
+
+output "oidc_provider_arn" {
+  value = length(aws_iam_openid_connect_provider.this) > 0 ? aws_iam_openid_connect_provider.this[0].arn : null
+}
+
 output "worker_node_security_group_id" {
   description = "Security group ID for worker nodes"
   value       = aws_security_group.worker_nodes.id

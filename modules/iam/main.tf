@@ -1,4 +1,3 @@
-
 locals {
   name = "${var.project_name}-${var.stage}-${var.cluster_name}"
 
@@ -11,15 +10,14 @@ locals {
   )
 }
 
-
 resource "aws_iam_role" "cluster" {
   name = "${local.name}-eks-cluster-role"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [{
-      Action    = "sts:AssumeRole"
-      Effect    = "Allow"
+      Action = "sts:AssumeRole",
+      Effect = "Allow",
       Principal = {
         Service = "eks.amazonaws.com"
       }
@@ -30,8 +28,6 @@ resource "aws_iam_role" "cluster" {
     { Name = "${local.name}-cluster-role" },
     local.common_tags
   )
-
-  
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_policy" {
@@ -44,15 +40,14 @@ resource "aws_iam_role_policy_attachment" "cluster_vpc_resource_controller" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
 }
 
-
 resource "aws_iam_role" "node_group" {
   name = "${local.name}-eks-node-role"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [{
-      Action    = "sts:AssumeRole"
-      Effect    = "Allow"
+      Action = "sts:AssumeRole",
+      Effect = "Allow",
       Principal = {
         Service = "ec2.amazonaws.com"
       }
@@ -63,10 +58,6 @@ resource "aws_iam_role" "node_group" {
     { Name = "${local.name}-node-role" },
     local.common_tags
   )
-
-  #lifecycle {
-   # prevent_destroy = var.stage == "prod"
-  #}
 }
 
 resource "aws_iam_role_policy_attachment" "node_worker_policy" {
