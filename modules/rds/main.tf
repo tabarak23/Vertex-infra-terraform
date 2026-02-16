@@ -50,8 +50,8 @@ resource "aws_security_group_rule" "eks_to_rds" {
 resource "random_password" "db" {
   for_each = local.databases
 
-  length  = 20
-  special = true
+  length           = 20
+  special          = true
   override_special = "!#$%^&*()-_=+[]{}<>:?"
 }
 
