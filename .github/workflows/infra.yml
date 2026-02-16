@@ -79,7 +79,9 @@ jobs:
           with:
             working_directory: ${{ steps.env.outputs.dir }}
             format: sarif
-            additional_args: --tfvars-file=terraform.tfvars --out=tfsec.sarif
+            additional_args: >
+              --tfvars-file=${{ steps.env.outputs.dir }}/terraform.tfvars
+              --out=tfsec.sarif
 
 
         - name: Upload tfsec SARIF
