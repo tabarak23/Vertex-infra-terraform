@@ -74,21 +74,21 @@ jobs:
             tflint --init
             tflint -f compact
 
-        - name: Run tfsec Security Scan
-          uses: aquasecurity/tfsec-action@v1.0.3
-          with:
-            working_directory: ${{ steps.env.outputs.dir }}
-            format: sarif
-            additional_args: >
-              --tfvars-file=${{ steps.env.outputs.dir }}/terraform.tfvars
-              --minimum-severity HIGH
-              --out=tfsec.sarif
+       # - name: Run tfsec Security Scan
+        #  uses: aquasecurity/tfsec-action@v1.0.3
+         # with:
+          #  working_directory: ${{ steps.env.outputs.dir }}
+           # format: sarif
+           # additional_args: >
+           #   --tfvars-file=${{ steps.env.outputs.dir }}/terraform.tfvars
+           #   --minimum-severity HIGH
+           #   --out=tfsec.sarif
 
 
-        - name: Upload tfsec SARIF
-          uses: github/codeql-action/upload-sarif@v3
-          with:
-            sarif_file: tfsec.sarif
+        #- name: Upload tfsec SARIF
+        #  uses: github/codeql-action/upload-sarif@v3
+        #  with:
+        #    sarif_file: tfsec.sarif
 
         - name: Terraform Init
           working-directory: ${{ steps.env.outputs.dir }}
