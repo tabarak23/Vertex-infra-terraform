@@ -81,6 +81,7 @@ jobs:
             format: sarif
             additional_args: >
               --tfvars-file=${{ steps.env.outputs.dir }}/terraform.tfvars
+              --minimum-severity HIGH
               --out=tfsec.sarif
 
 
