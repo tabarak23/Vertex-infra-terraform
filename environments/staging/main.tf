@@ -97,8 +97,8 @@ module "bastion" {
   vpc_id           = module.vpc.vpc_id
   public_subnet_id = module.vpc.public_subnet_ids[0]
 
-  allowed_ssh_cidr    = var.allowed_ssh_cidr
-  key_name            = var.key_name
-  kubernetes_version  = var.kubernetes_version
-  tags                = var.tags
+  allowed_ssh_cidr   = var.allowed_ssh_cidr
+  key_name           = var.key_name
+  kubernetes_version = var.kubernetes_version
+  tags               = var.tags
 }

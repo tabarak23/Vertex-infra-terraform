@@ -42,4 +42,4 @@ tags = {
 
 
 allowed_ssh_cidr = "49.206.44.97/32"
-key_name =  "ansible_controller"
+key_name         = "ansible_controller"

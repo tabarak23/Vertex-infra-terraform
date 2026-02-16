@@ -148,9 +148,9 @@ resource "aws_route_table_association" "db" {
 }
 
 resource "aws_security_group" "endpoints" {
-  count      = var.enable_vpc_endpoints ? 1 : 0
+  count       = var.enable_vpc_endpoints ? 1 : 0
   name_prefix = "${local.name}-vpce-"
-  vpc_id     = aws_vpc.main.id
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     from_port   = 443
