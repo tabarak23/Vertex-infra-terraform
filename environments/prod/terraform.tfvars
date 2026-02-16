@@ -36,7 +36,7 @@ node_groups = {
 }
 
 tags = {
-  project = "vertex"
+  Project = "vertex"
   env     = "prod"
 }
 

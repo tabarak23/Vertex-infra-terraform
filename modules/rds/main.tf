@@ -57,18 +57,19 @@ resource "random_password" "db" {
 resource "aws_db_instance" "this" {
   for_each = local.databases
 
-  identifier              = "${local.name}-${each.key}-db"
-  engine                  = "mysql"
-  engine_version          = "8.0.35"
-  instance_class          = "db.t3.micro"
-  allocated_storage       = 20
-  storage_type            = "gp3"
-  multi_az                = false
-  publicly_accessible     = false
-  deletion_protection     = false
-  backup_retention_period = 7
-  skip_final_snapshot     = true
-  port                    = 3306
+  identifier                 = "${local.name}-${each.key}-db"
+  engine                     = "mysql"
+  engine_version             = "8.0"
+  auto_minor_version_upgrade = true
+  instance_class             = "db.t3.micro"
+  allocated_storage          = 20
+  storage_type               = "gp3"
+  multi_az                   = false
+  publicly_accessible        = false
+  deletion_protection        = false
+  backup_retention_period    = 7
+  skip_final_snapshot        = true
+  port                       = 3306
 
   db_name  = each.value.db_name
   username = "admin"
