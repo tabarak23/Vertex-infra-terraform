@@ -158,6 +158,6 @@ jobs:
           working-directory: ${{ steps.env.outputs.dir }}
           run: terraform init -input=false
 
-        - name: Terraform Apply
+        - name: Terraform Destroy
           working-directory: ${{ steps.env.outputs.dir }}
-          run: terraform apply -input=false tfplan.binary
+          run: terraform destroy -auto-approve
