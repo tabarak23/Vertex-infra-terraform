@@ -41,6 +41,103 @@ Components include:
 
 ---
 
+# High Level Architecture Flow
+
+```
+Developer
+   │
+   │ SSH
+   ▼
+Bastion Host (EC2)
+   │
+   │ kubectl
+   ▼
+EKS Cluster (Private Endpoint)
+   │
+   │ runs workloads
+   ▼
+EKS Worker Nodes
+   │
+   │ connect to
+   ▼
+RDS Databases (MySQL)
+   │
+   ▼
+AWS Secrets Manager
+```
+
+---
+
+# Network Architecture
+
+```
+VPC (10.0.0.0/16)
+│
+├── Internet Gateway
+│
+├── Public Subnets
+│      └── Bastion Host (EC2)
+│
+├── Private Subnets
+│      └── EKS Worker Nodes
+│
+├── DB Subnets
+│      └── RDS MySQL
+│
+└── NAT Gateway
+       └── Allows private subnets to access internet
+```
+
+---
+
+# EKS Architecture
+
+```
+EKS Cluster
+│
+├── Control Plane (AWS Managed)
+│
+├── Managed Node Group
+│     ├── EC2 Worker Node
+│     ├── EC2 Worker Node
+│
+├── Security Groups
+│
+├── Addons
+│     ├── CoreDNS
+│     ├── kube-proxy
+│     └── VPC CNI
+│
+└── OIDC Provider (IRSA)
+      └── IAM Role for Service Accounts
+```
+
+---
+
+# CI/CD Architecture
+
+```
+GitHub Actions
+     │
+     │ OIDC Authentication
+     ▼
+AWS IAM Role
+     │
+     ▼
+Terraform
+     │
+     ▼
+Deploy Infrastructure
+```
+
+Pipeline stages:
+
+```
+Push → Terraform Format → TFLint → Validate → Plan → Apply
+```
+
+---
+
 # Infrastructure Components
 
 ## Networking
@@ -139,7 +236,7 @@ Workflow stages:
 2. TFLint validation
 3. Terraform validate
 4. Terraform plan
-5. Terraform apply
+5. Terraform apply(mannual approval for prod)
 
 Authentication is performed using **GitHub OIDC to AWS IAM role**.
 
