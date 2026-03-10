@@ -1,3 +1,71 @@
+# Platform Repositories
+
+This infrastructure repository is part of a **complete end-to-end cloud native platform** built using multiple repositories.  
+Each repository focuses on a specific layer of the system.
+
+---
+
+## Application Code & CI/CD
+
+Repository:  
+https://github.com/tabarak23/Vertex-Microservices-code
+
+This repository contains the **microservices source code, Dockerfiles, and CI/CD pipelines** that build, scan, and push container images to Amazon ECR using GitHub Actions and OIDC authentication.
+
+---
+
+## Infrastructure as Code (This Repository)
+
+Repository:  
+https://github.com/tabarak23/Vertex-infra-terraform
+
+This repository provisions the **entire AWS infrastructure** required to run the platform including networking, Amazon EKS, databases, IAM roles, and supporting services using Terraform.
+
+---
+
+## Kubernetes GitOps Deployment
+
+Repository:  
+https://github.com/tabarak23/Vertex-k8s-Gitops
+
+This repository manages **Kubernetes manifests and deployment configurations** for the microservices using a GitOps workflow.  
+The setup is currently being tested locally using **Kind (Kubernetes in Docker)** to understand networking and service communication, and will soon be deployed to **Amazon EKS**.
+
+---
+
+# End-to-End Platform Architecture
+
+The complete platform follows a **modern cloud-native deployment workflow**.
+
+```
+Developer
+   │
+   │ Push Code
+   ▼
+Vertex-Microservices-code
+   │
+   │ CI/CD Pipeline
+   ▼
+Build • Test • Security Scans
+   │
+   ▼
+Docker Images
+   │
+   ▼
+Amazon ECR
+   │
+   ▼
+Vertex-k8s-Gitops
+   │
+   │ GitOps Deployment
+   ▼
+Amazon EKS Cluster
+   │
+   ▼
+Microservices Running
+```
+
+This architecture separates **application code, infrastructure, and Kubernetes deployment** into independent repositories while enabling a scalable DevOps workflow.
 # Vertex Infrastructure (Terraform)
 
 ## Overview
