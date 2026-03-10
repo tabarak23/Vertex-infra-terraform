@@ -14,7 +14,7 @@ This repository contains the **microservices source code, Dockerfiles, and CI/CD
 
 ---
 
-## Infrastructure as Code 
+## Infrastructure as Code (This Repository)
 
 Repository:  
 https://github.com/tabarak23/Vertex-infra-terraform
