@@ -1,0 +1,252 @@
+# Vertex Infrastructure (Terraform)
+
+## Overview
+
+This repository contains Terraform infrastructure code used to provision a production-ready AWS environment for the **Vertex platform**.
+
+The infrastructure is built using modular Terraform and supports multiple environments:
+
+* dev
+* staging
+* production
+
+Currently only the **dev environment is deployed**.
+
+The infrastructure includes:
+
+* VPC networking
+* Amazon EKS Kubernetes cluster
+* Managed node groups
+* RDS MySQL databases
+* Secrets Manager
+* Bastion host for cluster access
+* IAM roles and IRSA
+* GitHub Actions CI/CD pipeline
+
+---
+
+# Architecture
+
+The infrastructure uses a **three-tier architecture** deployed inside an AWS VPC.
+
+Components include:
+
+* Public subnet for bastion host
+* Private subnets for EKS worker nodes
+* Database subnets for RDS
+* NAT gateway for outbound internet access
+* EKS cluster with managed node groups
+* RDS MySQL databases
+* AWS Secrets Manager for credentials
+
+---
+
+# Infrastructure Components
+
+## Networking
+
+* VPC (10.0.0.0/16)
+* Internet Gateway
+* NAT Gateway
+* Public Subnets
+* Private Subnets
+* Database Subnets
+* Route Tables
+
+## Compute
+
+* Amazon EKS cluster
+* Managed Node Groups
+* Bastion EC2 instance
+
+## Databases
+
+RDS MySQL instances:
+
+* users database
+* products database
+* orders database
+
+Each database has credentials stored in **AWS Secrets Manager**.
+
+## Security
+
+* IAM Roles for EKS
+* IAM Roles for Node Groups
+* IAM Roles for Bastion host
+* IRSA (IAM Roles for Service Accounts)
+* Security Groups
+* KMS encryption for Kubernetes secrets
+
+## Observability
+
+* CloudWatch log groups
+* EKS control plane logs
+
+---
+
+# Repository Structure
+
+```
+.
+├── modules/
+│   ├── vpc
+│   ├── eks
+│   ├── rds
+│   ├── iam
+│   ├── iam-irsa
+│   ├── bastion
+│   └── secrets
+│
+├── environments/
+│   ├── dev
+│   ├── staging
+│   └── prod
+│
+└── .github/workflows/
+    ├── infra.yml
+    └── infra-destroy.yml
+```
+
+---
+
+# Environments
+
+Each environment contains its own Terraform configuration:
+
+```
+environments/dev
+environments/staging
+environments/prod
+```
+
+These environments define:
+
+* backend configuration
+* providers
+* variables
+* module usage
+
+---
+
+# CI/CD Pipeline
+
+Infrastructure deployment is automated using **GitHub Actions**.
+
+Workflow stages:
+
+1. Terraform format check
+2. TFLint validation
+3. Terraform validate
+4. Terraform plan
+5. Terraform apply
+
+Authentication is performed using **GitHub OIDC to AWS IAM role**.
+
+---
+
+# Terraform State
+
+Terraform state is stored remotely in **AWS S3**.
+
+Example backend configuration:
+
+```
+bucket = terraform-state-vprofile
+key    = dev/terraform.tfstate
+region = us-west-1
+```
+
+---
+
+# Bastion Host
+
+A bastion EC2 instance is deployed in the public subnet.
+
+It is used for:
+
+* SSH access
+* kubectl access to EKS
+* cluster administration
+
+---
+
+# EKS Configuration
+
+Cluster version:
+
+```
+Kubernetes 1.30
+```
+
+Node group configuration:
+
+```
+Instance type: t3.medium
+Min nodes: 1
+Max nodes: 3
+Desired nodes: 2
+```
+
+Cluster endpoint access:
+
+```
+Private endpoint enabled
+Public endpoint disabled
+```
+
+---
+
+# Security Features
+
+The infrastructure includes several security best practices:
+
+* private EKS endpoint
+* IAM roles for service accounts (IRSA)
+* secrets stored in AWS Secrets Manager
+* encrypted EBS volumes
+* KMS encryption for Kubernetes secrets
+* restricted SSH access to bastion host
+
+---
+
+# Deployment
+
+Infrastructure is deployed automatically when changes are pushed to environment branches:
+
+```
+dev
+staging
+production
+```
+
+---
+
+# Destroy Infrastructure
+
+You can manually destroy environments using the GitHub Actions workflow:
+
+```
+terraform-destroy
+```
+
+Select the environment:
+
+```
+dev
+staging
+production
+```
+
+---
+
+# Future Improvements
+
+Possible improvements include:
+
+* autoscaling node groups
+* AWS ALB ingress controller
+* external DNS
+* monitoring with Prometheus and Grafana
+* centralized logging
+* production hardening
